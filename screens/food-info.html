@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Wellness - Food Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* App height specific adjustments */
+        .ios-app {
+            height: 844px; /* Changed from 1000px to 844px to match iPhone 12/13/14 dimensions */
+        }
+        
+        .app-content {
+            height: 100%; /* Keeping this as 100% */
+        }
+        
+        .food-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 0 0 12px 0;
+            position: relative;
+        }
+        
+        .header-container {
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+            border-radius: 0 0 20px 20px;
+            padding: 47px 15px 20px;
+            margin: -47px -20px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 5;
+        }
+        
+        .header-back-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            margin-right: 10px;
+        }
+        
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            margin: 2px 0 0 0;
+        }
+        
+        .add-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .add-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        
+        .food-card {
+            border-radius: 20px;
+            padding: 22px;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            margin-top: 10px;
+        }
+        
+        .food-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .food-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 10px var(--purple-shadow-medium);
+            flex-shrink: 0;
+        }
+        
+        .food-title {
+            margin: 0 0 5px 0;
+            color: var(--deep-purple);
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .food-subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .score-badge {
+            background: linear-gradient(135deg, #4361EE, #3A0CA3);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .quality-score-container {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 150, 199, 0.12), rgba(0, 150, 199, 0.05));
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .score-ring {
+            display: none;
+        }
+        
+        .score-details {
+            flex: 1;
+        }
+        
+        .score-title {
+            font-weight: 600;
+            color: #0096C7;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .score-description {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .nutrient-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nutrient-box {
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+            position: relative;
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .nutrient-icon {
+            font-size: 15px;
+            opacity: 0.95;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        
+        .protein-box .nutrient-icon {
+            background-color: rgba(67, 97, 238, 0.12);
+        }
+        
+        .carbs-box .nutrient-icon {
+            background-color: rgba(247, 127, 0, 0.12);
+        }
+        
+        .moisture-box .nutrient-icon {
+            background-color: rgba(0, 150, 199, 0.12);
+        }
+        
+        .calories-box .nutrient-icon {
+            background-color: rgba(45, 198, 83, 0.12);
+        }
+        
+        .quality-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            font-size: 10px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quality-good {
+            background-color: #2DC653;
+        }
+        
+        .quality-medium {
+            background-color: #F77F00;
+        }
+        
+        .quality-low {
+            background-color: #D90429;
+        }
+        
+        .nutrient-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            border-radius: 0;
+            z-index: 1;
+        }
+        
+        .protein-box::before {
+            background: linear-gradient(90deg, #4361EE, #3A0CA3);
+        }
+        
+        .protein-box .nutrient-value {
+            color: #4361EE;
+        }
+        
+        .carbs-box::before {
+            background: linear-gradient(90deg, #F77F00, #FCBF49);
+        }
+        
+        .carbs-box .nutrient-value {
+            color: #F77F00;
+        }
+        
+        .moisture-box::before {
+            background: linear-gradient(90deg, #0096C7, #48CAE4);
+        }
+        
+        .moisture-box .nutrient-value {
+            color: #0096C7;
+        }
+        
+        .calories-box::before {
+            background: linear-gradient(90deg, #2DC653, #4CAF50);
+        }
+        
+        .calories-box .nutrient-value {
+            color: #2DC653;
+        }
+        
+        .nutrient-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nutrient-value {
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        
+        .nutrient-label {
+            color: #666;
+            font-size: 13px;
+            margin-top: 0;
+            line-height: 1.2;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            color: var(--deep-purple);
+            margin: 25px 0 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .section-title i {
+            color: var(--medium-purple);
+        }
+        
+        .collapsible {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--purple-shadow-light);
+        }
+        
+        .collapsible-header {
+            padding: 15px;
+            background: var(--very-light-purple);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .collapsible-title {
+            font-weight: 600;
+            color: var(--deep-purple);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .collapsible-title i {
+            color: var(--medium-purple);
+        }
+        
+        .collapsible-content {
+            padding: 15px;
+            line-height: 1.5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .ingredient-tag {
+            display: inline-block;
+            background: var(--very-light-purple);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 0 8px 8px 0;
+            font-size: 13px;
+            color: var(--deep-purple);
+            border: 1px solid rgba(126, 34, 206, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .ingredient-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .ingredient-primary {
+            background-color: rgba(126, 34, 206, 0.1);
+            color: var(--deep-purple);
+            border-color: rgba(126, 34, 206, 0.3);
+            font-weight: 500;
+        }
+        
+        .nutrition-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        
+        .nutrition-bar {
+            height: 12px;
+            background-color: var(--very-light-purple);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+            border-radius: 6px;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+        
+        .nutrition-fill {
+            height: 100%;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .feeding-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .feeding-table th {
+            text-align: left;
+            padding: 8px;
+            background-color: var(--very-light-purple);
+            color: var(--deep-purple);
+        }
+        
+        .feeding-table td {
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+            box-shadow: 0 4px 12px var(--purple-shadow-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 16px;
+            padding: 16px;
+            border: none;
+            color: white;
+            border-radius: 14px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .action-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px var(--purple-shadow-medium);
+        }
+        
+        /* Improved layout styles */
+        .ingredient-analysis {
+            background-color: var(--very-light-purple);
+            padding: 16px;
+            border-radius: 15px;
+            margin: 15px 0 20px;
+            border-left: 4px solid var(--deep-purple);
+        }
+        
+        .analysis-title {
+            margin-top: 0;
+            font-weight: 600;
+            color: var(--deep-purple);
+            font-size: 16px;
+        }
+        
+        .analysis-list {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        .positive-icon {
+            color: #2DC653;
+        }
+        
+        .concern-icon {
+            color: #F77F00;
+        }
+        
+        .negative-icon {
+            color: #D90429;
+        }
+        
+        .nutritional-fact {
+            background-color: rgba(0, 122, 255, 0.05);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #007aff;
+        }
+        
+        .ingredient-tooltip {
+            pointer-events: none;
+        }
+        
+        /* Nav bar styles consistent with other pages */
+        .nav-bar {
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple)) !important;
+            border-top: none !important;
+        }
+        
+        .nav-item {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .nav-item.active .nav-icon {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .nav-item.active .nav-icon i {
+            color: white;
+        }
+        
+        .nav-item.active::after {
+            display: none;
+        }
+        
+        .header-badge {
+            position: absolute;
+            right: 20px;
+            bottom: -22px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #2DC653, #22A346);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(45, 198, 83, 0.3);
+            z-index: 10;
+        }
+        
+        .header-badge::after {
+            content: 'Good';
+            position: absolute;
+            bottom: -20px;
+            font-size: 12px;
+            color: #2DC653;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-wrapper">
+        <div class="ios-app">
+            <div class="status-bar">
+                <div class="time">11:07</div>
+                <div class="signal">
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div class="wifi">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="battery">
+                    <div class="battery-icon">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="app-content">
+                <div class="section">
+                    <div class="header-container">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <button class="header-back-button" onclick="window.location.href='scanner.html'">
+                                    <i class="fas fa-arrow-left" style="font-size: 14px;"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">Food Details</h1>
+                                    <p class="header-subtitle">Scan results & nutrition info</p>
+                                </div>
+                            </div>
+                            <button class="add-button">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="header-badge">78</div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px; position: relative; z-index: 1;">
+                            <div class="food-icon">
+                                <i class="fas fa-utensils" style="font-size: 28px;"></i>
+                            </div>
+                            <div style="margin-left: 15px; flex: 1;">
+                                <h2 class="food-title">Royal Canin Feline Health</h2>
+                                <p class="food-subtitle">Adult Indoor Wet Cat Food</p>
+                            </div>
+                        </div>
+                        
+                        <div class="quality-score-container">
+                            <div class="score-details">
+                                <div class="score-title">About this food</div>
+                                <p class="score-description">This food has a good balance of nutrients with high moisture content that supports urinary health.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="nutrient-grid">
+                            <div class="nutrient-box protein-box">
+                                <div class="quality-indicator quality-medium" title="Moderate protein content"><i class="fas fa-minus fa-xs"></i></div>
+                                <i class="fas fa-drumstick-bite nutrient-icon" style="color: #4361EE;"></i>
+                                <div class="nutrient-value">10.5%</div>
+                                <div class="nutrient-label">Protein</div>
+                            </div>
+                            <div class="nutrient-box carbs-box">
+                                <div class="quality-indicator quality-good" title="Low carbs is ideal for cats"><i class="fas fa-check fa-xs"></i></div>
+                                <i class="fas fa-bread-slice nutrient-icon" style="color: #F77F00;"></i>
+                                <div class="nutrient-value">4.7%</div>
+                                <div class="nutrient-label">Carbs</div>
+                            </div>
+                            <div class="nutrient-box moisture-box">
+                                <div class="quality-indicator quality-good" title="Excellent moisture content"><i class="fas fa-check fa-xs"></i></div>
+                                <i class="fas fa-tint nutrient-icon" style="color: #0096C7;"></i>
+                                <div class="nutrient-value">78%</div>
+                                <div class="nutrient-label">Moisture</div>
+                            </div>
+                            <div class="nutrient-box calories-box">
+                                <div class="quality-indicator quality-medium" title="Average calorie content"><i class="fas fa-minus fa-xs"></i></div>
+                                <i class="fas fa-fire nutrient-icon" style="color: #2DC653;"></i>
+                                <div class="nutrient-value">73</div>
+                                <div class="nutrient-label">Calories</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: rgba(0, 150, 199, 0.08); padding: 16px; border-radius: 15px; margin: 15px 0 20px; border-left: 4px solid #0096C7;">
+                        <p style="margin-top: 0; font-weight: 600; color: #0096C7; font-size: 16px;">Food Quality Assessment</p>
+                        <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><span style="color: #2DC653;">✓</span> <strong>High moisture content</strong> (78%) supports urinary health</li>
+                            <li style="margin-bottom: 8px;"><span style="color: #2DC653;">✓</span> <strong>Contains organ meats</strong> (liver) and added taurine for heart health</li>
+                            <li style="margin-bottom: 8px;"><span style="color: #F77F00;">⚠️</span> <strong>Uses non-specific by-products</strong> rather than named meats</li>
+                            <li style="margin-bottom: 8px;"><span style="color: #D90429;">✗</span> <strong>Contains wheat gluten and starches</strong> which are less appropriate for cats</li>
+                            <li style="margin-bottom: 0px;"><span style="color: #F77F00;">⚠️</span> <strong>Contains carrageenan</strong> as a thickener, which some cats may be sensitive to</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="section-title"><i class="fas fa-chart-pie"></i> Nutrition Analysis</h3>
+                    
+                    <div class="nutrition-label">
+                        <span>Animal-Based Protein</span>
+                        <span style="color: #4361EE; font-weight: 500;">Moderate</span>
+                    </div>
+                    <div class="nutrition-bar">
+                        <div class="nutrition-fill" style="width: 65%; background: linear-gradient(90deg, #4361EE, #3A0CA3);"></div>
+                    </div>
+                    
+                    <div class="nutrition-label">
+                        <span>Taurine Content</span>
+                        <span style="color: #4361EE; font-weight: 500;">Good</span>
+                    </div>
+                    <div class="nutrition-bar">
+                        <div class="nutrition-fill" style="width: 80%; background: linear-gradient(90deg, #4361EE, #3A0CA3);"></div>
+                    </div>
+                    
+                    <div class="nutrition-label">
+                        <span>Essential Fatty Acids</span>
+                        <span style="color: #0096C7; font-weight: 500;">Good</span>
+                    </div>
+                    <div class="nutrition-bar">
+                        <div class="nutrition-fill" style="width: 75%; background: linear-gradient(90deg, #0096C7, #48CAE4);"></div>
+                    </div>
+                    
+                    <div class="nutrition-label">
+                        <span>Carbohydrate Level</span>
+                        <span style="color: #F77F00; font-weight: 500;">Low (Good)</span>
+                    </div>
+                    <div class="nutrition-bar">
+                        <div class="nutrition-fill" style="width: 85%; background: linear-gradient(90deg, #F77F00, #FCBF49);"></div>
+                    </div>
+                    
+                    <div class="nutrition-label">
+                        <span>Moisture Content</span>
+                        <span style="color: #0096C7; font-weight: 500;">Excellent</span>
+                    </div>
+                    <div class="nutrition-bar">
+                        <div class="nutrition-fill" style="width: 95%; background: linear-gradient(90deg, #0096C7, #48CAE4);"></div>
+                    </div>
+                    
+                    <div class="collapsible" style="margin-top: 20px;">
+                        <div class="collapsible-header">
+                            <div class="collapsible-title">
+                                <i class="fas fa-list"></i> Ingredients
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: var(--medium-purple);"></i>
+                        </div>
+                        <div class="collapsible-content">
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
+                                <div class="ingredient-tag ingredient-primary">Water</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 149, 0, 0.1); color: #ff9500;">Pork By-Products</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 149, 0, 0.1); color: #ff9500;">Chicken By-Products</div>
+                                <div class="ingredient-tag ingredient-primary">Chicken Liver</div>
+                                <div class="ingredient-tag ingredient-primary">Pork Liver</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 59, 48, 0.1); color: #ff3b30;">Wheat Flour</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 59, 48, 0.1); color: #ff3b30;">Wheat Gluten</div>
+                                <div class="ingredient-tag">Powdered Cellulose</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 59, 48, 0.1); color: #ff3b30;">Modified Corn Starch</div>
+                                <div class="ingredient-tag">Natural Flavors</div>
+                                <div class="ingredient-tag ingredient-primary">Fish Oil</div>
+                                <div class="ingredient-tag">Guar Gum</div>
+                                <div class="ingredient-tag">Potassium Chloride</div>
+                                <div class="ingredient-tag ingredient-primary">Taurine</div>
+                                <div class="ingredient-tag">Calcium Carbonate</div>
+                                <div class="ingredient-tag" style="background-color: rgba(255, 149, 0, 0.1); color: #ff9500;">Carrageenan</div>
+                                <div class="ingredient-tag">Vitamins & Minerals</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="collapsible" style="margin-top: 15px;">
+                        <div class="collapsible-header">
+                            <div class="collapsible-title">
+                                <i class="fas fa-info-circle"></i> Product Details
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: var(--medium-purple);"></i>
+                        </div>
+                        <div class="collapsible-content">
+                            <div style="display: grid; grid-template-columns: auto 1fr; row-gap: 12px; column-gap: 15px; font-size: 14px;">
+                                <div style="font-weight: 600; color: #555;">Type:</div>
+                                <div>Canned/Wet Food</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Life Stage:</div>
+                                <div>Adult</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Special Formula:</div>
+                                <div>Indoor cat maintenance</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Caloric Content:</div>
+                                <div>73 kcal/85g can (86 kcal/100g)</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Crude Protein:</div>
+                                <div>10.5% min (42% on dry matter basis)</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Crude Fat:</div>
+                                <div>4.0% min (16% on dry matter basis)</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Crude Fiber:</div>
+                                <div>1.8% max (7.2% on dry matter basis)</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Moisture:</div>
+                                <div>78% max</div>
+                                
+                                <div style="font-weight: 600; color: #555;">AAFCO Statement:</div>
+                                <div>Formulated to meet AAFCO Cat Food Nutrient Profiles for adult maintenance</div>
+                                
+                                <div style="font-weight: 600; color: #555;">Manufacturer:</div>
+                                <div>Royal Canin USA, Inc.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="action-button">
+                        <i class="fas fa-plus-circle"></i>
+                        Add to Feeding Schedule
+                    </button>
+                </div>
+            </div>
+            
+            <div class="nav-bar" style="background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple)); border-top: none;">
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-home" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Home</div>
+                </div>
+                <div class="nav-item active" style="position: relative;">
+                    <div class="nav-icon" style="background-color: rgba(255,255,255,0.2);">
+                        <i class="fas fa-barcode" style="color: white;"></i>
+                    </div>
+                    <div class="nav-label" style="color: white;">Scan</div>
+                    <style>
+                        .nav-item.active::after {
+                            display: none;
+                        }
+                    </style>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-calendar-alt" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Schedule</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-heartbeat" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Food</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple toggle for collapsible sections
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.fa-chevron-down');
+                
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        // Initialize collapsible sections
+        const collapsibles = document.querySelectorAll('.collapsible-content');
+        const icons = document.querySelectorAll('.collapsible-header .fa-chevron-down');
+        
+        // Open both ingredients and product details sections by default
+        collapsibles[0].style.maxHeight = collapsibles[0].scrollHeight + 'px';
+        icons[0].style.transform = 'rotate(180deg)';
+        
+        collapsibles[1].style.maxHeight = collapsibles[1].scrollHeight + 'px';
+        icons[1].style.transform = 'rotate(180deg)';
+        
+        // Add hover tooltips for ingredient tags
+        const ingredientInfo = {
+            "Water": "High moisture content benefits feline hydration and urinary health.",
+            "Pork By-Products": "May include organs but quality can vary.",
+            "Chicken By-Products": "May include organs but quality can vary.",
+            "Chicken Liver": "Excellent source of vitamin A and iron.",
+            "Pork Liver": "Rich source of preformed vitamin A and iron.",
+            "Wheat Flour": "Carbohydrate source with low value for cats.",
+            "Wheat Gluten": "Plant protein less suitable for cats than animal proteins.",
+            "Powdered Cellulose": "Added fiber, low nutritional value.",
+            "Modified Corn Starch": "Thickener, adds carbohydrates.",
+            "Natural Flavors": "Enhances palatability, ingredients may vary.",
+            "Fish Oil": "Good source of omega-3 fatty acids.",
+            "Guar Gum": "Thickening agent and stabilizer.",
+            "Potassium Chloride": "Mineral supplement.",
+            "Taurine": "Essential amino acid for heart and eye health.",
+            "Calcium Carbonate": "Calcium supplement.",
+            "Carrageenan": "Thickening agent with some controversy.",
+            "Vitamins & Minerals": "Added for nutritional completeness."
+        };
+        
+        document.querySelectorAll('.ingredient-tag').forEach(tag => {
+            const ingredient = tag.textContent;
+            if (ingredientInfo[ingredient]) {
+                // Create tooltip element
+                const tooltip = document.createElement('div');
+                tooltip.className = 'ingredient-tooltip';
+                tooltip.textContent = ingredientInfo[ingredient];
+                tooltip.style.position = 'absolute';
+                tooltip.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                tooltip.style.color = 'white';
+                tooltip.style.padding = '8px 12px';
+                tooltip.style.borderRadius = '6px';
+                tooltip.style.fontSize = '12px';
+                tooltip.style.maxWidth = '250px';
+                tooltip.style.zIndex = '100';
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+                tooltip.style.transition = 'opacity 0.3s';
+                
+                // Add tooltip to body
+                document.body.appendChild(tooltip);
+                
+                // Show tooltip on hover
+                tag.addEventListener('mouseover', (e) => {
+                    const rect = tag.getBoundingClientRect();
+                    tooltip.style.left = rect.left + 'px';
+                    tooltip.style.top = (rect.bottom + 10) + 'px';
+                    tooltip.style.visibility = 'visible';
+                    tooltip.style.opacity = '1';
+                });
+                
+                // Hide tooltip when not hovering
+                tag.addEventListener('mouseout', () => {
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.opacity = '0';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

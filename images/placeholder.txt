@@ -1,0 +1,7 @@
+Please add the following images to this directory:
+
+1. purrfectly-logo.png - A logo for the Purrfectly app (around 40px height)
+2. cat-app-mockup.png - A mockup of the app on an iPhone 
+3. app-store-badge.png - The App Store download badge
+
+These images are referenced in the index.html file and are needed for the landing page to display correctly. 

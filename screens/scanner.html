@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfectly - Barcode Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Scanner page specific styles */
+        .scanner-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .scanner-view {
+            background-color: #000;
+            height: 320px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .scanner-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scan-area {
+            width: 240px;
+            height: 120px;
+            position: relative;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+        }
+        
+        .scan-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--medium-purple);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+        
+        .scan-corners {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--medium-purple);
+            border-style: solid;
+            border-width: 0;
+            z-index: 5;
+        }
+        
+        .top-left {
+            top: 0;
+            left: 0;
+            border-top-width: 3px;
+            border-left-width: 3px;
+            border-top-left-radius: 6px;
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+            border-top-width: 3px;
+            border-right-width: 3px;
+            border-top-right-radius: 6px;
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            border-bottom-width: 3px;
+            border-left-width: 3px;
+            border-bottom-left-radius: 6px;
+        }
+        
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            border-bottom-width: 3px;
+            border-right-width: 3px;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .scan-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(168, 85, 247, 0), 
+                rgba(168, 85, 247, 1), 
+                rgba(168, 85, 247, 0));
+            width: 100%;
+            animation: scan 1.8s ease-in-out infinite;
+            box-shadow: 0 0 8px var(--medium-purple);
+        }
+        
+        @keyframes scan {
+            0% {
+                top: 10%;
+                opacity: 0.6;
+            }
+            50% {
+                top: 90%;
+                opacity: 1;
+            }
+            100% {
+                top: 10%;
+                opacity: 0.6;
+            }
+        }
+        
+        .scanner-instructions {
+            position: absolute;
+            bottom: 30px;
+            color: white;
+            font-size: 14px;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .scanner-instructions i {
+            color: var(--medium-purple);
+        }
+        
+        .scanner-icon {
+            color: var(--medium-purple);
+            font-size: 28px;
+            opacity: 0.8;
+            position: absolute;
+            z-index: 4;
+            filter: drop-shadow(0 0 5px rgba(168, 85, 247, 0.4));
+        }
+        
+        .scanner-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .scanner-button {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--button-purple);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px var(--purple-shadow-medium);
+            transition: all 0.2s ease;
+        }
+        
+        .scanner-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px var(--purple-shadow-medium);
+        }
+        
+        .secondary-scanner-button {
+            background: white;
+            color: var(--deep-purple);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .recent-scans {
+            margin-top: 25px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 15px var(--purple-shadow-light);
+        }
+        
+        .recent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .recent-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--deep-purple);
+        }
+        
+        .view-all {
+            color: var(--medium-purple);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .food-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .food-item:last-child {
+            border-bottom: none;
+        }
+        
+        .food-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .food-details {
+            flex: 1;
+        }
+        
+        .food-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 15px;
+        }
+        
+        .food-tags {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .food-tag {
+            background-color: var(--very-light-purple);
+            color: var(--deep-purple);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+        
+        .food-score {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 40px;
+        }
+        
+        .score-high {
+            color: #34C759;
+            background-color: rgba(52, 199, 89, 0.1);
+        }
+        
+        .score-medium {
+            color: #FFCC00;
+            background-color: rgba(255, 204, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-wrapper">
+        <div class="ios-app">
+            <div class="status-bar">
+                <div class="time">11:07</div>
+                <div class="signal">
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div class="wifi">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="battery">
+                    <div class="battery-icon">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="app-content">
+                <div class="scanner-header">
+                    <h1 class="section-title">Scan Cat Food</h1>
+                    <p style="color: #666; margin-top: -5px;">Find nutrition info instantly</p>
+                </div>
+                
+                <div class="scanner-view">
+                    <div class="scanner-overlay">
+                        <div class="scan-area">
+                            <div class="scan-frame"></div>
+                            <div class="scan-corners top-left"></div>
+                            <div class="scan-corners top-right"></div>
+                            <div class="scan-corners bottom-left"></div>
+                            <div class="scan-corners bottom-right"></div>
+                            <div class="scan-line"></div>
+                            <div class="scanner-icon" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <i class="fas fa-barcode"></i>
+                            </div>
+                        </div>
+                        <div class="scanner-instructions">
+                            <i class="fas fa-info-circle"></i> Position barcode within frame
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scanner-buttons">
+                    <button class="scanner-button">
+                        <i class="fas fa-camera"></i> Scan Barcode
+                    </button>
+                    
+                    <button class="scanner-button secondary-scanner-button">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                
+                <div class="recent-scans">
+                    <div class="recent-header">
+                        <div class="recent-title">Recently Scanned</div>
+                        <div class="view-all">View All</div>
+                    </div>
+                    
+                    <div class="food-item">
+                        <div style="display: flex; align-items: center;">
+                            <div class="food-icon" style="background-color: #007aff;">
+                                <i class="fas fa-drumstick-bite"></i>
+                            </div>
+                            <div class="food-details">
+                                <div class="food-name">Royal Canin Feline Health</div>
+                                <div class="food-tags">
+                                    <span class="food-tag">Canned</span>
+                                    <span class="food-tag">Indoor</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                    <i class="fas fa-fire-alt" style="color: #FF9500;"></i> 73 kcal/85g
+                                </div>
+                            </div>
+                        </div>
+                        <div class="food-score score-high">88</div>
+                    </div>
+                    
+                    <div class="food-item">
+                        <div style="display: flex; align-items: center;">
+                            <div class="food-icon" style="background-color: #FF9500;">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <div class="food-details">
+                                <div class="food-name">Purina Pro Plan Sensitive</div>
+                                <div class="food-tags">
+                                    <span class="food-tag">Wet</span>
+                                    <span class="food-tag">Salmon</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                    <i class="fas fa-fire-alt" style="color: #FF9500;"></i> 95 kcal/100g
+                                </div>
+                            </div>
+                        </div>
+                        <div class="food-score score-high">85</div>
+                    </div>
+                    
+                    <div class="food-item">
+                        <div style="display: flex; align-items: center;">
+                            <div class="food-icon" style="background-color: #5AC8FA;">
+                                <i class="fas fa-cookie"></i>
+                            </div>
+                            <div class="food-details">
+                                <div class="food-name">Blue Buffalo Wilderness</div>
+                                <div class="food-tags">
+                                    <span class="food-tag">Dry</span>
+                                    <span class="food-tag">Grain-Free</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                    <i class="fas fa-fire-alt" style="color: #FF9500;"></i> 410 kcal/cup
+                                </div>
+                            </div>
+                        </div>
+                        <div class="food-score score-medium">76</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-bar" style="background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple)); border-top: none;">
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-home" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Home</div>
+                </div>
+                <div class="nav-item active" style="position: relative;">
+                    <div class="nav-icon" style="background-color: rgba(255,255,255,0.2);">
+                        <i class="fas fa-barcode" style="color: white;"></i>
+                    </div>
+                    <div class="nav-label" style="color: white;">Scan</div>
+                    <style>
+                        .nav-item.active::after {
+                            display: none;
+                        }
+                    </style>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-calendar-alt" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Schedule</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-heartbeat" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Wellness</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

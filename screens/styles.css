@@ -1,0 +1,418 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+    --deep-purple: #7e22ce;
+    --medium-purple: #a855f7;
+    --light-purple: #d8b4fe;
+    --very-light-purple: #f5f3ff;
+    --button-purple: #9333ea;
+    --purple-shadow-light: rgba(126, 34, 206, 0.15);
+    --purple-shadow-medium: rgba(126, 34, 206, 0.4);
+}
+
+body {
+    background-color: #000;
+    color: #333;
+    padding: 0;
+    margin: 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.mockup-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.mockup-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.mockup-preview {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mockup-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.mockup-preview h2 {
+    margin-bottom: 10px;
+    color: #007aff;
+}
+
+.mockup-preview p {
+    color: #666;
+    text-align: center;
+}
+
+/* iPhone Mockup Wrapper Styles */
+.iphone-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+/* iOS App Mockup Styles */
+.ios-app {
+    width: 390px;
+    height: 844px;
+    margin: 0;
+    background: white;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 40px;
+    flex-shrink: 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.ios-app::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Removing the purple status bar gradient */
+/* .ios-app::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 47px;
+    background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+    z-index: 1;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+} */
+
+/* Hiding the status bar completely */
+.status-bar {
+    display: none;
+}
+
+/* Removing the notch */
+.status-bar::after {
+    display: none;
+}
+
+.time, .signal, .wifi, .battery {
+    display: none;
+}
+
+.nav-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 10;
+    padding: 0;
+    box-shadow: 0 -1px 5px var(--purple-shadow-light);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 25%;
+    position: relative;
+    transition: all 0.2s ease;
+    height: 100%;
+}
+
+.nav-item:active {
+    transform: scale(0.92);
+}
+
+.nav-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon i {
+    font-size: 22px;
+    color: #999;
+}
+
+/* Hide all nav labels */
+.nav-label {
+    display: none;
+}
+
+/* Active nav item styles */
+.nav-item.active .nav-icon {
+    background-color: rgba(0, 122, 255, 0.1);
+}
+
+.nav-item.active .nav-icon i {
+    color: #007aff;
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #007aff;
+}
+
+.app-content {
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    padding-bottom: 100px;
+    position: relative;
+    /* Removed the status bar padding from the top */
+    /* padding-top: 67px; */
+    z-index: 5;
+    background: white;
+    /* Removing status bar margin */
+    /* margin-top: 47px; */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.app-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--deep-purple);
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px var(--purple-shadow-light);
+}
+
+.button {
+    background-color: var(--button-purple);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.secondary-button {
+    background-color: #e5e5ea;
+    color: var(--deep-purple);
+}
+
+/* Scanner Specific Styles */
+.scanner-view {
+    background-color: #000;
+    height: 300px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-area {
+    border: 2px solid #007aff;
+    width: 70%;
+    height: 35%;
+    position: relative;
+}
+
+.scan-line {
+    position: absolute;
+    height: 2px;
+    background-color: #007aff;
+    width: 100%;
+    top: 50%;
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+/* Food Info Specific Styles */
+.food-score {
+    font-size: 64px;
+    font-weight: bold;
+    color: #34C759;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.nutrition-bar {
+    height: 20px;
+    background-color: #e5e5ea;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.nutrition-fill {
+    height: 100%;
+    background-color: #007aff;
+}
+
+.nutrition-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+/* Schedule Specific Styles */
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.food-tag {
+    display: inline-block;
+    background-color: #e5e5ea;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+/* Wellness Hub Specific Styles */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.content-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    height: 150px;
+    position: relative;
+}
+
+.content-img {
+    height: 100px;
+    background-color: #ddd;
+}
+
+.content-title {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 15px;
+    font-weight: 500;
+    color: #777;
+    border-bottom: 2px solid transparent;
+}
+
+/* .tab.active {
+    color: #007aff;
+    border-bottom-color: #007aff;
+} */
+
+/* Responsive adjustments */
+@media (max-height: 900px) {
+    .ios-app {
+        height: 800px;
+    }
+}
+
+@media (max-width: 500px) {
+    .ios-app {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+} 

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfectly - Add Cat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add Cat page specific styles */
+        .add-cat-header {
+            text-align: center;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            color: var(--deep-purple);
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .cat-form {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px var(--purple-shadow-light);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 16px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            border-color: var(--medium-purple);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--purple-shadow-light);
+        }
+        
+        .avatar-selector {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: var(--very-light-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-purple);
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .avatar-option.selected {
+            background: var(--medium-purple);
+            color: white;
+            box-shadow: 0 4px 10px var(--purple-shadow-medium);
+            transform: scale(1.1);
+        }
+        
+        .color-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .color-option.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .radio-option {
+            flex: 1;
+            background: var(--very-light-purple);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--deep-purple);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .radio-option.selected {
+            background: var(--deep-purple);
+            color: white;
+        }
+        
+        .date-picker {
+            position: relative;
+        }
+        
+        .date-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-purple);
+        }
+        
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .submit-button {
+            flex: 1;
+            background: var(--deep-purple);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 12px var(--purple-shadow-medium);
+            transition: all 0.2s ease;
+        }
+        
+        .submit-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px var(--purple-shadow-medium);
+        }
+        
+        .cancel-button {
+            flex: 1;
+            background: white;
+            color: var(--deep-purple);
+            border: 1px solid var(--light-purple);
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .cancel-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-purple);
+            pointer-events: none;
+        }
+        
+        select.form-input {
+            appearance: none;
+            padding-right: 40px;
+        }
+        
+        .custom-upload {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .custom-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--very-light-purple);
+            color: var(--deep-purple);
+            border: 1px dashed var(--medium-purple);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .custom-upload-btn:hover {
+            background: var(--light-purple);
+            color: white;
+        }
+        
+        .upload-preview {
+            margin-top: 12px;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-preview {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 59, 48, 0.8);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-wrapper">
+        <div class="ios-app">
+            <!-- Status bar removed for device-agnostic look -->
+                <div class="signal">
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div class="wifi">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="battery">
+                    <div class="battery-icon">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Content -->
+            <div class="app-content">
+                <div class="add-cat-header">
+                    <a href="home.html" class="back-button">
+                        <i class="fas fa-chevron-left" style="margin-right: 5px;"></i> Back
+                    </a>
+                    <h1 class="section-title">Add New Cat</h1>
+                </div>
+                
+                <div class="cat-form">
+                    <div class="form-group">
+                        <label class="form-label">Cat Avatar</label>
+                        <div class="avatar-selector">
+                            <div class="avatar-option selected">
+                                <i class="fas fa-cat"></i>
+                            </div>
+                            <div class="avatar-option">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                            <div class="avatar-option">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <div class="avatar-option">
+                                <i class="fas fa-bone"></i>
+                            </div>
+                        </div>
+                        <div class="custom-upload">
+                            <label for="custom-photo" class="custom-upload-btn">
+                                <i class="fas fa-camera"></i>
+                                <span>Upload Photo</span>
+                            </label>
+                            <input type="file" id="custom-photo" accept="image/*" style="display: none;">
+                            <div class="upload-preview" id="upload-preview" style="display: none;">
+                                <img id="preview-image" src="#" alt="Preview">
+                                <button type="button" class="remove-preview">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Avatar Color</label>
+                        <div class="color-selector">
+                            <div class="color-option selected" style="background-color: var(--deep-purple);"></div>
+                            <div class="color-option" style="background-color: #007aff;"></div>
+                            <div class="color-option" style="background-color: #34C759;"></div>
+                            <div class="color-option" style="background-color: #FF9500;"></div>
+                            <div class="color-option" style="background-color: #FF3B30;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your cat's name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <div class="radio-group">
+                            <div class="radio-option selected">
+                                <i class="fas fa-mars" style="margin-right: 5px;"></i> Male
+                            </div>
+                            <div class="radio-option">
+                                <i class="fas fa-venus" style="margin-right: 5px;"></i> Female
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Spayed/Neutered</label>
+                        <div class="radio-group">
+                            <div class="radio-option selected">
+                                <i class="fas fa-check" style="margin-right: 5px;"></i> Yes
+                            </div>
+                            <div class="radio-option">
+                                <i class="fas fa-times" style="margin-right: 5px;"></i> No
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Birthday</label>
+                        <div class="date-picker">
+                            <input type="date" class="form-input">
+                            <div class="date-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Breed</label>
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="" disabled selected>Select cat breed</option>
+                                <option value="domestic">Domestic Shorthair</option>
+                                <option value="siamese">Siamese</option>
+                                <option value="persian">Persian</option>
+                                <option value="maine">Maine Coon</option>
+                                <option value="bengal">Bengal</option>
+                                <option value="ragdoll">Ragdoll</option>
+                                <option value="sphynx">Sphynx</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="select-icon">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Weight (lbs)</label>
+                        <input type="number" class="form-input" placeholder="Enter weight in pounds">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Activity Level</label>
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="" disabled selected>Select activity level</option>
+                                <option value="sedentary">Sedentary - Mostly sleeps</option>
+                                <option value="low">Low - Occasional play</option>
+                                <option value="moderate">Moderate - Regular play</option>
+                                <option value="active">Active - Very playful</option>
+                                <option value="very-active">Very Active - Energetic</option>
+                            </select>
+                            <div class="select-icon">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="cancel-button">Cancel</button>
+                        <button class="submit-button">Save Cat</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Bar -->
+            <div class="nav-bar" style="background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple)); border-top: none;">
+                <div class="nav-item active" style="position: relative;">
+                    <div class="nav-icon" style="background-color: rgba(255,255,255,0.2);">
+                        <i class="fas fa-home" style="color: white;"></i>
+                    </div>
+                    <div class="nav-label" style="color: white;">Home</div>
+                    <style>
+                        .nav-item.active::after {
+                            display: none;
+                        }
+                    </style>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-barcode" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Scan</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-calendar-alt" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Schedule</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-heartbeat" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Wellness</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Image upload preview functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('custom-photo');
+            const previewContainer = document.getElementById('upload-preview');
+            const previewImage = document.getElementById('preview-image');
+            const removeButton = document.querySelector('.remove-preview');
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            
+            // Handle file selection
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        previewImage.setAttribute('src', this.result);
+                        previewContainer.style.display = 'block';
+                        
+                        // Deselect all avatar options
+                        avatarOptions.forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Handle remove button click
+            removeButton.addEventListener('click', function() {
+                previewImage.setAttribute('src', '#');
+                previewContainer.style.display = 'none';
+                fileInput.value = '';
+                
+                // Select the first avatar option
+                avatarOptions[0].classList.add('selected');
+            });
+            
+            // Handle avatar option selection
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect all options
+                    avatarOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select the clicked option
+                    this.classList.add('selected');
+                    
+                    // Hide the custom photo preview
+                    previewContainer.style.display = 'none';
+                    fileInput.value = '';
+                });
+            });
+            
+            // Handle radio option selections
+            const radioGroups = document.querySelectorAll('.radio-group');
+            
+            radioGroups.forEach(group => {
+                const options = group.querySelectorAll('.radio-option');
+                
+                options.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Deselect all options in this group
+                        options.forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Select the clicked option
+                        this.classList.add('selected');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

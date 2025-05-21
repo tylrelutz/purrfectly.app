@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Wellness - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Home page specific styles */
+        .home-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .welcome-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple));
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(126, 34, 206, 0.3);
+        }
+        
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .welcome-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+        
+        .welcome-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .welcome-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .get-started-btn {
+            background: white;
+            color: var(--deep-purple);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .get-started-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px var(--purple-shadow-light);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--deep-purple);
+        }
+
+        .cat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cat-card {
+            display: flex;
+            align-items: center;
+            background: var(--very-light-purple);
+            border-radius: 16px;
+            padding: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .cat-card:active {
+            transform: scale(0.98);
+        }
+
+        .cat-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: var(--medium-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 4px 10px var(--purple-shadow-medium);
+        }
+        
+        .cat-info {
+            flex: 1;
+        }
+        
+        .cat-name {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .cat-details {
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-cat-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px dashed var(--light-purple);
+            border-radius: 16px;
+            padding: 20px;
+            color: var(--deep-purple);
+            font-weight: 600;
+            font-size: 16px;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .add-cat-card:active {
+            background: var(--very-light-purple);
+        }
+        
+        .add-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--very-light-purple);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--deep-purple);
+        }
+        
+        .tips-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px var(--purple-shadow-light);
+        }
+        
+        .tips-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .tips-list::-webkit-scrollbar {
+            height: 6px;
+            background: #f4f4f4;
+            border-radius: 3px;
+        }
+        
+        .tips-list::-webkit-scrollbar-thumb {
+            background: var(--light-purple);
+            border-radius: 3px;
+        }
+        
+        .tip-card {
+            min-width: 250px;
+            background: var(--very-light-purple);
+            border-radius: 16px;
+            padding: 20px;
+            scroll-snap-align: start;
+        }
+        
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: var(--medium-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 10px var(--purple-shadow-medium);
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .tip-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-wrapper">
+        <div class="ios-app">
+            <!-- Status bar removed for device-agnostic look -->
+            
+            <!-- App Content -->
+            <div class="app-content">
+                <!-- <div class="home-header">
+                    <h1 class="section-title">Home</h1>
+                </div> -->
+                
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="logo-container">
+                        <img src="logo.png" alt="Purrfectly Logo" class="welcome-logo">
+                    </div>
+                    <h2 class="welcome-title">Welcome to Purrfectly!</h2>
+                    <p class="welcome-text">Track your cats' diet, health, and happiness all in one place.</p>
+                    <button class="get-started-btn" onclick="window.location.href='add-cat.html'">
+                        <i class="fas fa-paw"></i>
+                        Get Started
+                    </button>
+                </div>
+                
+                <!-- Cats Section -->
+                <div class="cats-section">
+                    <div class="section-header">
+                        <div class="section-title">My Cats</div>
+                    </div>
+                    
+                    <div class="cat-list">
+                        <!-- Existing Cat Example -->
+                        <div class="cat-card">
+                            <div class="cat-avatar">
+                                <i class="fas fa-cat"></i>
+                            </div>
+                            <div class="cat-info">
+                                <div class="cat-name">Whiskers</div>
+                                <div class="cat-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 3 years</span>
+                                    <span><i class="fas fa-weight"></i> 10 lbs</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right" style="color: #ccc; margin-left: 10px;"></i>
+                        </div>
+                        
+                        <!-- Add New Cat -->
+                        <div class="add-cat-card" onclick="window.location.href='add-cat.html'">
+                            <div class="add-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <span>Add a new cat</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tips Section -->
+                <div class="tips-section">
+                    <div class="section-header">
+                        <div class="section-title">Cat Care Tips</div>
+                    </div>
+                    
+                    <div class="tips-list">
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="tip-title">Nutrition Basics</div>
+                            <div class="tip-text">Feed your cat a balanced diet with proper proteins and nutrients for optimal health.</div>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="tip-title">Mental Health</div>
+                            <div class="tip-text">Regular play sessions help keep your cat mentally stimulated and happy.</div>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-medkit"></i>
+                            </div>
+                            <div class="tip-title">Preventive Care</div>
+                            <div class="tip-text">Regular vet check-ups and vaccinations help prevent common feline health issues.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Bar -->
+            <div class="nav-bar" style="background: linear-gradient(135deg, var(--deep-purple), var(--medium-purple)); border-top: none;">
+                <div class="nav-item active" style="position: relative;">
+                    <div class="nav-icon" style="background-color: rgba(255,255,255,0.2);">
+                        <i class="fas fa-home" style="color: white;"></i>
+                    </div>
+                    <div class="nav-label" style="color: white;">Home</div>
+                    <style>
+                        .nav-item.active::after {
+                            display: none;
+                        }
+                    </style>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-barcode" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Scan</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-calendar-alt" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Schedule</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-heartbeat" style="color: rgba(255,255,255,0.7);"></i>
+                    </div>
+                    <div class="nav-label" style="color: rgba(255,255,255,0.7);">Wellness</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
