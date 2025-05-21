@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Purrfectly - Cat Wellness App</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css?v=1.4.1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- iOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#7e22ce">
+    <style>
+        /* Additional header styling */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .logo {
+            margin-bottom: 2px;
+        }
+        
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-left: 52px;
+            margin-top: -8px;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .tagline {
+                margin-left: 44px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Purrfectly Logo">
+                    <h1>Purrfectly</h1>
+                </div>
+                <span class="tagline">the cat wellness app</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">What We Do</a></li>
+                    <li><a href="#download">Get Early Access</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-logo">
+            <div class="logo">
+                <img src="images/logo.png" alt="Purrfectly Logo">
+                <h1>Purrfectly</h1>
+            </div>
+            <span class="tagline">the cat wellness app</span>
+        </div>
+        <ul>
+            <li><a href="#features">What We Do</a></li>
+            <li><a href="#download">Get Early Access</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </div>
+
+    <section class="hero hero-test">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Next-Level Cat Care</h1>
+                <p>The cat app that helps you crush the pet parent game.</p>
+                <p>Access the ultimate cat food database.</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-outline">Get Early Access</a>
+                    <!-- <a href="#features" class="btn btn-outline">Learn More</a> -->
+                </div>
+            </div>
+            <div class="hero-image mobile-ui-fix">
+                <img src="images/hero-features.png" alt="Purrfectly App Features" class="hero-features-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement Section - Only visible on large displays -->
+    <section class="mission-statement">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z" fill="#7e22ce" fill-opacity="0.7"/>
+                    </svg>
+                </div>
+                <h2>Our Mission</h2>
+                <p>Our mission with Purrfectly is simple: to empower fellow cat parents like you. We want to help you cut through the confusion, save you precious time on research, and make providing the best for your cats an easier, more informed, and genuinely enjoyable part of your journey together.</p>
+                <p class="mission-tagline">Welcome to a smarter way to care for your purrfect companions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-intro">
+        <div class="container">
+            <h2>Why Your Cat Needs This</h2>
+            <p>All-in-one cat wellness platform with food analysis, health info, and meal planning. Built for your cat's best life.</p>
+        </div>
+    </section>
+
+    <section id="food-scanner" class="app-section">
+        <div class="container reverse">
+            <div class="section-content">
+                <div class="feature-badge">Epic Food Database</div>
+                <h2>Food Scanner</h2>
+                <p>Know exactly what you're feeding your cat. Scan any food package for instant insight.</p>
+                <div class="feature-list-container">
+                    <ul class="feature-list">
+                        <li>Scan for instant ingredient breakdown</li>
+                        <li>Get nutrition scores in seconds</li>
+                        <li>Spot harmful ingredients instantly</li>
+                        <li>Compare products to find the best</li>
+                        <li>See what other cat parents think</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn btn-secondary">Get Early Access</a>
+            </div>
+            <div class="iphones-wrapper">
+                <div class="iphone-container">
+                    <iframe src="screens/scanner.html" title="Food Scanner Screen" width="390" height="844" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cat-profile" class="app-section">
+        <div class="container">
+            <div class="section-content">
+                <div class="feature-badge">Track Your Squad</div>
+                <h2>Cat Profiles</h2>
+                <p>Create a digital HQ for each of your feline friends. One-tap access to everything they need.</p>
+                <div class="feature-list-container">
+                    <ul class="feature-list">
+                        <li>Log stats, breed info, and health metrics</li>
+                        <li>Auto-calculate optimal daily calories</li>
+                        <li>Track food sensitivities and allergies</li>
+                        <li>Get pro nutrition tips</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn btn-secondary">Get Early Access</a>
+            </div>
+            <div class="iphones-wrapper">
+                <div class="iphone-container">
+                    <iframe src="screens/home.html" title="Cat Profiles Screen" width="390" height="844" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wellness" class="app-section">
+        <div class="container reverse">
+            <div class="section-content">
+                <div class="feature-badge">Cat Knowledge Unlocked</div>
+                <h2>Wellness Center</h2>
+                <p>Level up your cat care game with vet-approved resources and expert hacks.</p>
+                <div class="feature-list-container">
+                    <ul class="feature-list">
+                        <li>Access pro health guides</li>
+                        <li>Master essential cat care skills</li>
+                        <li>Test your knowledge with quick quizzes</li>
+                        <li>Build winning care routines</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn btn-secondary">Get Early Access</a>
+            </div>
+            <div class="iphones-wrapper">
+                <div class="iphone-container">
+                    <iframe src="screens/wellness-hub.html" title="Wellness Hub Screen" width="390" height="844" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scheduling" class="app-section">
+        <div class="container">
+            <div class="section-content">
+                <div class="feature-badge">Smart Scheduling</div>
+                <h2>Meal Planning</h2>
+                <p>Food game on point. Our AI creates perfect meal plans that match your cat's needs and your budget.</p>
+                <div class="feature-list-container">
+                    <ul class="feature-list">
+                        <li>Track your food inventory effortlessly</li>
+                        <li>Set custom feeding alerts</li>
+                        <li>Schedule optimal nutrition timing</li>
+                        <li>Create balanced meal variety</li>
+                        <li>Get restock reminders before you run out</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn btn-secondary">Get Early Access</a>
+            </div>
+            <div class="iphones-wrapper">
+                <div class="iphone-container">
+                    <iframe src="screens/scheduler.html" title="Scheduler Screen" width="390" height="844" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="testimonials">
+        <div class="container">
+            <h2>Happy Cat Parents</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"Purrfectly has been a game changer for me. I used to spend hours searching for the right food for my cats, but now I can just scan the barcode and know exactly what I'm feeding them."</p>
+                    <div class="testimonial-author">- Luiza L.</div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Get Early Access</h2>
+            <p>Be the first to try Purrfectly when it launches.</p>
+            <div class="early-access-form">
+                <form id="early-access-form" action="https://formsubmit.co/tylrelutz@gmail.com" method="POST">
+                    <input type="hidden" name="_next" value="https://purrfectly.app/index.html">
+                    <input type="hidden" name="_subject" value="New Early Access Signup!">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your name" required aria-label="Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your email" required aria-label="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Early Access</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="images/logo.png" alt="Purrfectly Logo">
+                        <h3>Purrfectly</h3>
+                    </div>
+                    <p>The cat app that helps you crush the pet parent game.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><i class="icon-instagram">Instagram</i></a>
+                        <a href="#" aria-label="TikTok"><i class="icon-tiktok">TikTok</i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-nav">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#food-scanner">Food Scanner</a></li>
+                        <li><a href="#cat-profile">Cat Profiles</a></li>
+                        <li><a href="#wellness">Wellness</a></li>
+                        <li><a href="#scheduling">Smart Scheduling</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-nav">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-subscribe">
+                    <h4>Stay in the Loop</h4>
+                    <p>Get cat hacks and app updates.</p>
+                    <form class="subscribe-form" action="https://formsubmit.co/tylrelutz@gmail.com" method="POST">
+                        <input type="hidden" name="_next" value="https://purrfectly.app/index.html">
+                        <input type="hidden" name="_subject" value="New Newsletter Subscription">
+                        <input type="email" name="email" placeholder="Your email" aria-label="Email" required>
+                        <button type="submit" class="btn-subscribe">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Purrfectly. All rights reserved.</p>
+                <p>Made with <span class="heart">♥</span> for cats everywhere</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include external JavaScript file -->
+    <script src="script.js"></script>
+    
+    <!-- Additional script for mission statement animation -->
+    <script>
+        // Ensure mission statement animates correctly on large screens
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a slight delay to ensure animation happens after page load
+            setTimeout(function() {
+                const missionStatement = document.querySelector('.mission-statement');
+                if (missionStatement && window.innerWidth >= 992) {
+                    missionStatement.style.display = 'block';
+                    // Force a reflow before adding the visible class
+                    void missionStatement.offsetWidth;
+                    missionStatement.style.opacity = '1';
+                    missionStatement.style.transform = 'translateY(0)';
+                }
+            }, 300);
+        });
+    </script>
+</body>
+</html> 
