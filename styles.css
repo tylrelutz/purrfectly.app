@@ -2823,7 +2823,7 @@ body.menu-open .mobile-login-btn {
     border-radius: 12px;
     filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
-    animation: float-feature 3s ease-in-out infinite;
+    animation: float-feature 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     transform-origin: center center;
     position: relative;
     z-index: 1;
@@ -2864,22 +2864,24 @@ body.menu-open .mobile-login-btn {
 
 @keyframes float-feature {
     0% {
-        transform: translateY(0) scale(1) rotate(0deg);
-        filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+        transform: translateY(-4px) scale(1.005) rotate(-0.1deg);
+        filter: drop-shadow(0 15px 26px rgba(0, 0, 0, 0.22));
     }
     25% {
-        transform: translateY(-8px) scale(1.01) rotate(-0.5deg);
+        transform: translateY(-8px) scale(1.01) rotate(0deg);
+        filter: drop-shadow(0 18px 28px rgba(126, 34, 206, 0.23));
     }
     50% {
-        transform: translateY(-15px) scale(1.02) rotate(0deg);
-        filter: drop-shadow(0 24px 32px rgba(126, 34, 206, 0.25));
+        transform: translateY(-4px) scale(1.005) rotate(0.1deg);
+        filter: drop-shadow(0 15px 26px rgba(0, 0, 0, 0.22));
     }
     75% {
-        transform: translateY(-8px) scale(1.01) rotate(0.5deg);
-    }
-    100% {
         transform: translateY(0) scale(1) rotate(0deg);
         filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+    }
+    100% {
+        transform: translateY(-4px) scale(1.005) rotate(-0.1deg);
+        filter: drop-shadow(0 15px 26px rgba(0, 0, 0, 0.22));
     }
 }
 
@@ -2925,16 +2927,16 @@ body.menu-open .mobile-login-btn {
 /* Simplified animation for mobile to improve performance */
 @keyframes float-feature-mobile {
     0% {
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+        transform: translateY(-3px) scale(1.002);
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.21));
     }
     50% {
-        transform: translateY(-10px) scale(1.01);
-        filter: drop-shadow(0 16px 24px rgba(126, 34, 206, 0.2));
+        transform: translateY(-6px) scale(1.004);
+        filter: drop-shadow(0 14px 22px rgba(126, 34, 206, 0.2));
     }
     100% {
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+        transform: translateY(-3px) scale(1.002);
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.21));
     }
 }
 
